@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " D ",
+    " I "
+  ],
+  "key": {
+    "I": { "item": "minecraft:paper" },
+    "D": { "item": "minecraft:stone_sword" }
+  },
+  "result": {
+    "item": "athenamod:token_guerreiro",
+    "count": 1
+  }
+}

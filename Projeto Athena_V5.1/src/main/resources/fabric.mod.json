@@ -1,0 +1,32 @@
+{
+    "schemaVersion": 1,
+    "id": "athenamod",
+    "version": "${version}",
+    "name": "Athena Mod",
+    "description": "Pick your class and build your story with friends.",
+    "authors": ["Me!"],
+    "contact": {
+        "homepage": "https://fabricmc.net/",
+        "sources": "https://github.com/FabricMC/fabric-example-mod"
+    },
+    "license": "CC0-1.0",
+    "icon": "assets/athenamod/icon.jpg",
+    "environment": "*",
+    "entrypoints": {
+        "main": ["ultraman.athenamod.net.AthenaMod"],
+        "client": ["ultraman.athenamod.net.AthenaModClient"]
+    },
+    "mixins": [
+        "athenamod.mixins.json",
+        {
+            "config": "athenamod.client.mixins.json",
+            "environment": "client"
+        }
+    ],
+    "depends": {
+        "fabricloader": ">=0.15.11",
+        "minecraft": "~1.21.1",
+        "java": ">=21",
+        "fabric-api": "*"
+    }
+}

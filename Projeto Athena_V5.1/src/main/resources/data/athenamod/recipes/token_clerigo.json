@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " D ",
+    " I "
+  ],
+  "key": {
+    "I": { "item": "minecraft:paper" },
+    "D": { "item": "minecraft:glass_bottle" }
+  },
+  "result": {
+    "item": "athenamod:token_clerigo",
+    "count": 1
+  }
+}
