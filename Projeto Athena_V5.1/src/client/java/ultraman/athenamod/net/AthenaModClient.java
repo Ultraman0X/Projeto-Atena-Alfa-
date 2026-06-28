@@ -12,7 +12,10 @@ public class AthenaModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Registra o overlay de mana no HUD
+
+        ClientPlayNetworking.registerGlobalReceiver(SyncManaPayload.ID, (payload, context) -> {
+            ManaHudOverlay.setMana(payload.currentMana(), payload.maxMana());
+        });
         HudRenderCallback.EVENT.register((drawContext, renderTickCounter) -> {
             float tickDelta = renderTickCounter.getTickDelta(true);
             ManaHudOverlay.render(drawContext, tickDelta);

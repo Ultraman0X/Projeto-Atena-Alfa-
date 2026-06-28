@@ -2,6 +2,7 @@ package ultraman.athenamod.net;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.server.network.ServerPlayerEntity;
 import ultraman.athenamod.net.spell.ClassSpellBook;
 import ultraman.athenamod.net.spell.Spell;
 import ultraman.athenamod.net.spell.SpellManager;
@@ -14,6 +15,7 @@ public class ModNetworking {
         // Registra o tipo de pacote no lado servidor (play channel)
         PayloadTypeRegistry.playC2S().register(CastSpellPayload.ID, CastSpellPayload.CODEC);
 
+        PayloadTypeRegistry.playS2C().register(SyncManaPayload.ID, SyncManaPayload.CODEC);
         // Lida com o pacote quando o servidor o recebe
         ServerPlayNetworking.registerGlobalReceiver(CastSpellPayload.ID, (payload, context) -> {
             context.server().execute(() -> {
@@ -27,7 +29,16 @@ public class ModNetworking {
 
                 Spell spell = spells.get(slot);
                 SpellManager.castSpell(spell, player.getWorld(), player);
+
+                // Sincroniza mana após usar feitiço
+                syncMana(player);
             });
         });
+    }
+
+    public static void syncMana(ServerPlayerEntity player) {
+        int current = PlayerClassData.getMana(player);
+        int max     = PlayerClassData.get(player).getMaxMana();
+        ServerPlayNetworking.send(player, new SyncManaPayload(current, max));
     }
 }

@@ -23,7 +23,20 @@ public class PlayerClassData {
         ClassAttributeManager.applyAttributes(player, newClass);
         float maxHealth = player.getMaxHealth();
         player.setHealth(maxHealth);
-        setMana(player, newClass.getMaxMana());
+        if (newClass == ClassType.WARRIOR) {
+            setMana(player, 50);
+        }
+        if (newClass == ClassType.ROGUE) {
+            setMana(player, 100);
+        }
+        if (newClass == ClassType.MAGE) {
+            setMana(player, 250);
+        }
+        if (newClass == ClassType.CLERIC) {
+            setMana(player, 200);
+        } else {
+            setMana(player, 0);
+        }
 
     }
 
@@ -33,9 +46,10 @@ public class PlayerClassData {
 
     public static void setMana(PlayerEntity player, int value) {
         int maxMana = get(player).getMaxMana();
-        int manaCorreta = Math.max(0, Math.min(value, maxMana));
+        int currentMana = Math.max(0, Math.min(value, maxMana));
 
-        player.setAttached(AthenaMod.PLAYER_MANA_ATTACHMENT, manaCorreta);
+        // Salva no Attachment (Servidor)
+        player.setAttached(AthenaMod.PLAYER_MANA_ATTACHMENT, currentMana);
     }
 
     public static void addMana(PlayerEntity player, int value) {

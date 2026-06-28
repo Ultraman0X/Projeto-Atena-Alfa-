@@ -22,6 +22,12 @@ public class AthenaMod implements ModInitializer {
                     Identifier.of(MOD_ID, "player_mana"),
                     () -> 0
             );
+    // Ticks restantes de lâmina envenenada (Ladino)
+    public static final AttachmentType<Integer> POISON_IMBUE_ATTACHMENT =
+            AttachmentRegistry.createDefaulted(
+                    Identifier.of(MOD_ID, "poison_imbue"),
+                    () -> 0
+            );
 
     @Override
     public void onInitialize() {

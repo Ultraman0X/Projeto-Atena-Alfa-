@@ -9,6 +9,14 @@ import net.minecraft.entity.player.PlayerEntity;
 @Environment(EnvType.CLIENT)
 public class ManaHudOverlay {
 
+    private static int currentMana = 0;
+    private static int maxMana     = 0;
+
+    public static void setMana(int current, int max) {
+        currentMana = current;
+        maxMana     = max;
+    }
+
     public static void render(DrawContext drawContext, float tickDelta) {
         MinecraftClient mc = MinecraftClient.getInstance();
         PlayerEntity player = mc.player;
@@ -19,16 +27,12 @@ public class ManaHudOverlay {
         ClassType classType = PlayerClassData.get(player);
 
         // Só mostra a barra se a classe tiver mana
-//        if (!classType.usesMana()) return;
-
-        int mana    = PlayerClassData.getMana(player);
-        int maxMana = classType.getMaxMana();
-        int manaCorreta = Math.max(0, Math.min(mana, maxMana));
+        //if (!classType.usesMana()) return;
 
         int x      = 10;
         int y      = mc.getWindow().getScaledHeight() - 60;
         int width  = 80;
-        int filled = maxMana > 0 ? (mana * width) / maxMana : 0;
+        int filled = maxMana > 0 ? (currentMana * width) / maxMana : 0;
 
         // Fundo escuro
         drawContext.fill(x, y, x + width, y + 8, 0xFF222222);
@@ -37,7 +41,7 @@ public class ManaHudOverlay {
         // Texto "Mana: X/Y"
         drawContext.drawText(
                 mc.textRenderer,
-                "Mana: " + manaCorreta + "/" + maxMana,
+                "Mana: " + currentMana + "/" + maxMana,
                 x, y - 10,
                 0xFFAAAAFF,
                 true
